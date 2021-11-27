@@ -1,9 +1,0 @@
-- [ ] Able to authenticate
-	- [ ] User based authentication
-	- [ ] App based authentication
-
-- [ ] Event / subscription
-	- [ ] HTTP server for receiving subscription events
-
-- [ ] API wrapper
-	- [ ] Make API requests through wrapper class
