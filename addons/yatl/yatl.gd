@@ -141,7 +141,7 @@ func __chat_message(message: String, tags: Dictionary) -> void:
 		__socket_send("PONG :tmi.twitch.tv")
 		return
 	
-	var split: PoolStringArray = message.split(" ", true, 4)
+	var split: PoolStringArray = message.split(" ", true, 3)
 	match split[1]:
 		"001":
 			emit_signal("chat_login", self, true)
