@@ -2,7 +2,7 @@ tool
 extends Node
 
 #Custom class preloads
-const ChatMessage = preload("res://addons/yatl/chat/chat_message.gd")
+const ChatMessage = preload("./chat_message.gd")
 
 
 #URL constants
@@ -32,9 +32,9 @@ var __username_regex = RegEx.new()
 #Lifecycle methods
 func _init() -> void:
 	__socket.verify_ssl = true
-	
+
 	__username_regex.compile(__username_pattern)
-	
+
 	__socket.connect("connection_closed", self, "__socket_connection_closed")
 	__socket.connect("connection_established", self, "__socket_connection_established")
 	__socket.connect("connection_error", self, "__socket_connection_error")
@@ -57,7 +57,7 @@ func chat_connect() -> void:
 func chat_disconnect() -> void:
 	if !(__socket.get_peer(1).is_connected_to_host()):
 		return
-	
+
 	__socket.disconnect_from_host()
 
 
@@ -118,7 +118,7 @@ func __socket_data_received() -> void:
 			for t in new_message[0].split(";"):
 				var kv: PoolStringArray = t.split("=")
 				tags[kv[0]] = kv[1]
-		
+
 		__chat_message(message, tags)
 
 
@@ -135,12 +135,12 @@ func __chat_message(message: String, tags: Dictionary) -> void:
 	if(message == ":tmi.twitch.tv NOTICE * :Login authentication failed"):
 		emit_signal("chat_login", self, false)
 		return
-	
+
 	if(message == "PING :tmi.twitch.tv"):
 		emit_signal("chat_ping_received", self)
 		__socket_send("PONG :tmi.twitch.tv")
 		return
-	
+
 	var split: PoolStringArray = message.split(" ", true, 3)
 	match split[1]:
 		"001":
