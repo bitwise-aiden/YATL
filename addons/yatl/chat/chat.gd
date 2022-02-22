@@ -1,6 +1,19 @@
 tool
 extends Node
 
+
+# Private imports
+
+const __PAL: Resource = preload("../pal/pal.gd")
+
+
+#######
+#
+# TODO: Update this code for new PAL abstraction
+#
+#######
+
+
 #Custom class preloads
 const ChatMessage = preload("./chat_message.gd")
 
