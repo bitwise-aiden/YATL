@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "YATL",
+"language": "GDScript",
+"path": "res://addons/yatl/yatl.gd"
+} ]
+_global_script_class_icons={
+"YATL": "res://addons/yatl/yatl_icon.png"
+}
+
 [application]
 
 config/name="YATL"
@@ -16,7 +26,7 @@ config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/yatl/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [physics]
 
