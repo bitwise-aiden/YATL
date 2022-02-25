@@ -1,10 +1,10 @@
 extends Control
 
-const HTTPRequestFactory = preload("res://addons/yatl/pal/request_factory.gd")
+const RequestFactory = preload("res://addons/yatl/pal/request_factory.gd")
 
 
 func _ready() -> void:
-	var request_factory: HTTPRequestFactory = HTTPRequestFactory.new()
+	var request_factory: RequestFactory = RequestFactory.new()
 	add_child(request_factory)
 
 	var a = yield(request_factory.request("https://httpstat.us/200"), "completed")

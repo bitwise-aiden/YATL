@@ -9,11 +9,11 @@ const __HTTPResponse: Resource = preload("../shared/http_response.gd")
 # Public methods
 
 func request(
-	url: String,
-	headers: Dictionary = {},
-	use_ssl: bool = true,
-	method: int = 0,
-	data: String = ""
+	_url: String,
+	_headers: Dictionary = {},
+	_use_ssl: bool = true,
+	_method: int = 0,
+	_data: String = ""
 ) -> __HTTPResponse:
 	var request: HTTPRequest = HTTPRequest.new()
 	request.use_threads = true # TODO: Make this a setting
@@ -24,17 +24,17 @@ func request(
 
 	var formatted_headers: PoolStringArray = PoolStringArray()
 
-	for header in headers:
+	for header in _headers:
 		formatted_headers.append(
-			"%s: %s" % [header, headers[header]]
+			"%s: %s" % [header, _headers[header]]
 		)
 
 	var error: int = request.request(
-		url,
+		_url,
 		formatted_headers,
-		use_ssl,
-		method,
-		data
+		_use_ssl,
+		_method,
+		_data
 	)
 
 	if error != OK:

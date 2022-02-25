@@ -1,5 +1,3 @@
-extends Resource
-
 # Public signals
 
 signal completed(response)
@@ -19,9 +17,9 @@ var body: PoolByteArray setget __noop_set
 # Lifecycle methods
 
 func _init(
-	request: HTTPRequest
+	_request: HTTPRequest
 ) -> void:
-	self.request = request
+	request = _request
 
 	request.connect("request_completed", self, "__request_completed")
 
@@ -33,16 +31,16 @@ func __noop_set(_value) -> void:
 
 
 func __request_completed(
-	p_result: int,
-	p_response_code: int,
-	p_headers: PoolStringArray,
-	p_body: PoolByteArray
+	_result: int,
+	_response_code: int,
+	_headers: PoolStringArray,
+	_body: PoolByteArray
 ) -> void:
-	result = p_result
-	response_code = p_response_code
+	result = _result
+	response_code = _response_code
 	headers = {}
 
-	for header in p_headers:
+	for header in _headers:
 		var parts: Array = header.split(":")
 
 		var name: String = parts[0].trim_prefix(" ").trim_suffix(" ")
@@ -50,15 +48,20 @@ func __request_completed(
 
 		headers[name] = value
 
-	body = p_body
+	body = _body
+
+	request.queue_free()
 
 	emit_signal("completed", self)
 
 
+# Friend RequestFactory
 func __request_error(
-	p_error: int
+	_error: int
 ) -> void:
-	error = error
+	error = _error
+
+	request.queue_free()
 
 	yield(request.get_tree(), "idle_frame")
 
