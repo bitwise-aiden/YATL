@@ -22,6 +22,7 @@ _global_script_class_icons={
 
 config/name="YATL"
 config/description="Yet Another Twitch Library"
+run/main_scene="res://source/main.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
