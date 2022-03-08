@@ -55,10 +55,10 @@ func __request_completed(
 	emit_signal("completed", self)
 
 
-# Friend RequestFactory
+
 func __request_error(
 	_error: int
-) -> void:
+) -> void: # Friend: RequestFactory
 	error = _error
 
 	request.queue_free()
