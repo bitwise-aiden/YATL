@@ -1,9 +1,9 @@
 extends Node
 
 
-# Private imports
+# Public imports
 
-const __HTTPResponse: Resource = preload("../shared/http_response.gd")
+const HTTPResponse: Resource = preload("../shared/http_response.gd")
 
 
 # Public methods
@@ -14,13 +14,13 @@ func request(
 	_use_ssl: bool = true,
 	_method: int = 0,
 	_data: String = ""
-) -> __HTTPResponse:
+) -> HTTPResponse:
 	var request: HTTPRequest = HTTPRequest.new()
 	request.use_threads = true # TODO: Make this a setting
 
 	add_child(request)
 
-	var response: __HTTPResponse = __HTTPResponse.new(request)
+	var response: HTTPResponse = HTTPResponse.new(request)
 
 	var formatted_headers: PoolStringArray = PoolStringArray()
 
