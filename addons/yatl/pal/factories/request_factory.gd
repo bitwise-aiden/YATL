@@ -3,7 +3,7 @@ extends Node
 
 # Public imports
 
-const HTTPResponse: Resource = preload("../shared/http_response.gd")
+const HTTPResponse: Resource = preload("../../shared/http_response.gd")
 
 
 # Public methods
@@ -40,7 +40,7 @@ func request(
 	if error != OK:
 		push_error("An error occured while making the HTTP request.")
 
-		response.__request_error(error)
+		response.__request_error(error, get_tree())
 
 	return response
 
