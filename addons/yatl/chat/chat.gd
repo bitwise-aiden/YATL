@@ -75,9 +75,10 @@ func chat_connect() -> void:
 	__socket_connection = __pal.establish_connection(CHAT_WSS_URL)
 	yield(__socket_connection, "completed")
 	if __socket_connection.connected:
-		emit_signal("connected")
 		__socket_connection.connect("disconnected", self, "__on_socket_connection_disconnected")
+		__socket_connection.connect("data_received", self, "__on_socket_connection_data_received")
 		__client = __socket_connection.client
+		emit_signal("connected")
 	else:
 		emit_signal("connection_failed")
 
