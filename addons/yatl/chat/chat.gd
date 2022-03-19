@@ -56,10 +56,7 @@ func _init(pal: __PAL) -> void:
 
 
 func _process(delta: float) -> void:
-	if !__socket_connection:
-		return
-	
-	if !__socket_connection.connected:
+	if !__socket_connection && !__socket_connection.connected:
 		return
 	
 	if !__message_queue.empty() && __time_elapsed >= message_queue_timeout:
