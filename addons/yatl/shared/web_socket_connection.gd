@@ -24,7 +24,7 @@ func _init(
 	client.connect("connection_closed", self, "__closed")
 	client.connect("connection_error", self, "__closed")
 	client.connect("data_received", self, "__data_received")
-	client.connect("connection_connected", self, "__connected")
+	client.connect("connection_established", self, "__connected")
 
 
 # Private methods
@@ -37,7 +37,7 @@ func __closed() -> void:
 		emit_signal("completed", self)
 
 
-func __connected() -> void:
+func __connected(_protocol: String) -> void:
 	connected = true
 
 	emit_signal("completed", self)
