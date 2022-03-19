@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 	
 	if !__message_queue.empty() && __time_elapsed >= message_queue_timeout:
 		__client_put_message(__message_queue.pop_front())
-		__time_elapsed = 0
+		__time_elapsed = 0.0
 	else:
 		__time_elapsed += delta
 
@@ -115,7 +115,7 @@ func leave_current_channel() -> void:
 
 
 func send_message(message: String) -> void:
-	__message_queue.append("PRIVMSG #" + __current_channel + " :" + message)
+	__message_queue.append("PRIVMSG " + __current_channel + " :" + message)
 
 
 # Private methods

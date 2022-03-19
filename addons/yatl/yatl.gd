@@ -32,6 +32,11 @@ func _ready() -> void:
 	add_child(__pal)
 
 
+func _process(delta: float) -> void:
+	if chat:
+		chat._process(delta)
+
+
 # Public methods
 
 func initialize_chat() -> Chat:
