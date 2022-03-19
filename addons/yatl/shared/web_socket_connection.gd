@@ -1,6 +1,3 @@
-class_name WebSocketConnection
-
-
 # Public signals
 
 signal completed(connection)
