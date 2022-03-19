@@ -8,15 +8,32 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "WebSocketConnection",
+"language": "GDScript",
+"path": "res://addons/yatl/shared/web_socket_connection.gd"
+}, {
+"base": "Node",
+"class": "YATL",
+"language": "GDScript",
+"path": "res://addons/yatl/yatl.gd"
+} ]
+_global_script_class_icons={
+"WebSocketConnection": "",
+"YATL": "res://addons/yatl/yatl_icon.png"
+}
+
 [application]
 
 config/name="YATL"
 config/description="Yet Another Twitch Library"
+run/main_scene="res://source/main.tscn"
 config/icon="res://icon.png"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/yatl/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [physics]
 
