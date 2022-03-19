@@ -56,7 +56,10 @@ func _init(pal: __PAL) -> void:
 
 
 func _process(delta: float) -> void:
-	if !__socket_connection || !__socket_connection.connected:
+	if !__socket_connection:
+		return
+	
+	if !__socket_connection.connected:
 		return
 	
 	if !__message_queue.empty() && __time_elapsed >= message_queue_timeout:
@@ -69,9 +72,9 @@ func _process(delta: float) -> void:
 # Public methods
 
 func chat_connect() -> void:
-	if __socket_connection || __socket_connection.connected:
+	if __socket_connection && __socket_connection.connected:
 		return
-	
+
 	__socket_connection = __pal.establish_connection(CHAT_WSS_URL)
 	yield(__socket_connection, "completed")
 	if __socket_connection.connected:
@@ -85,7 +88,7 @@ func chat_connect() -> void:
 func chat_disconnect() -> void:
 	if !__socket_connection || !__socket_connection.connected:
 		return
-	
+		
 	__socket_connection.client.disconnect_from_host() # TODO: velop expose disconnect_from_host() to WebsocketConnection
 	yield(__socket_connection, "disconnected")
 	__client = null
