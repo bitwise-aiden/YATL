@@ -22,14 +22,14 @@ func _init(
 	client = _client
 
 	client.connect("connection_closed", self, "__closed")
-	client.connect("connection_error", self, "__closed")
+	client.connect("connection_error", self, "__closed", [false])
 	client.connect("data_received", self, "__data_received")
-	client.connect("connection_connected", self, "__connected")
+	client.connect("connection_established", self, "__connected")
 
 
 # Private methods
 
-func __closed() -> void:
+func __closed(_was_clean_close: bool) -> void:
 	if connected:
 		connected = false
 		emit_signal("disconnected")
@@ -37,7 +37,7 @@ func __closed() -> void:
 		emit_signal("completed", self)
 
 
-func __connected() -> void:
+func __connected(_protocol: String) -> void:
 	connected = true
 
 	emit_signal("completed", self)
