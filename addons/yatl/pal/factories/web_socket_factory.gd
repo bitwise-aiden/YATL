@@ -28,7 +28,7 @@ func establish_connection(
 ) -> WebSocketConnection:
 	var client: WebSocketClient = WebSocketClient.new()
 	client.connect("connection_closed", self, "_closed", [client])
-	client.connect("connection_error", self, "_closed", [client])
+	client.connect("connection_error", self, "_closed", [false, client])
 
 	var connection: WebSocketConnection = WebSocketConnection.new(client)
 
@@ -47,6 +47,7 @@ func establish_connection(
 # Private methods
 
 func _closed(
+	_was_clean_close: bool,
 	_client: WebSocketClient
 ) -> void:
 	var index: int = __clients.find(_client)
