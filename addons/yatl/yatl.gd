@@ -39,15 +39,19 @@ func _process(delta: float) -> void:
 
 # Public methods
 
+func initialize_api() -> API:
+	api = API.new(__pal)
+
+	return api
+
+
 func initialize_chat() -> Chat:
 	chat = Chat.new(__pal)
+
 	return chat
 
-# TODO:
-# line 1
-# line 2
-# line 3
-# line 4
-# line 5
-# line 6
-# velop add everything else lol
+
+func initialize_event() -> Event:
+	event = Event.new(__pal)
+
+	return event

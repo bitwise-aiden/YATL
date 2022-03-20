@@ -51,14 +51,14 @@ var __time_elapsed: float = 0.0
 
 func _init(pal: __PAL) -> void:
 	__pal = pal
-	
+
 	__username_regex.compile(__username_pattern)
 
 
 func _process(delta: float) -> void:
 	if !__socket_connection && !__socket_connection.connected:
 		return
-	
+
 	if !__message_queue.empty() && __time_elapsed >= message_queue_timeout:
 		__client_put_message(__message_queue.pop_front())
 		__time_elapsed = 0.0
@@ -85,7 +85,7 @@ func chat_connect() -> void:
 func chat_disconnect() -> void:
 	if !__socket_connection || !__socket_connection.connected:
 		return
-		
+
 	__socket_connection.client.disconnect_from_host() # TODO: velop expose disconnect_from_host() to WebsocketConnection
 	yield(__socket_connection, "disconnected")
 	__client = null
@@ -95,7 +95,7 @@ func chat_disconnect() -> void:
 func authenticate(nick: String, token: String) -> void:
 	if !__socket_connection || !__socket_connection.connected:
 		return
-	
+
 	__client.get_peer(1).set_write_mode(WebSocketPeer.WRITE_MODE_TEXT)
 	__client_put_message("PASS " + ("" if token.begins_with("oauth:") else "oauth:") + token)
 	__client_put_message("NICK " + nick.to_lower())
@@ -109,7 +109,7 @@ func join_channel(channel: String) -> void:
 func leave_current_channel() -> void:
 	if __current_channel.empty():
 		return
-	
+
 	__client_put_message("PART " + __current_channel)
 
 
@@ -142,11 +142,11 @@ func __handle_chat_message(message: String, tags: Dictionary) -> void:
 	if message == ":tmi.twitch.tv NOTICE * :Login authentication failed":
 		emit_signal("login", false)
 		return
-	
+
 	if message == "PING :tmi.twitch.tv":
 		__client_put_message("PONG :tmi.twitch.tv")
 		return
-	
+
 	var split: PoolStringArray = message.split(" ", true, 3)
 	match split[1]:
 		"001":
@@ -166,5 +166,5 @@ func __handle_chat_message(message: String, tags: Dictionary) -> void:
 func __client_put_message(message: String) -> void:
 	if !__client:
 		return
-	
+
 	__client.get_peer(1).put_packet(message.to_utf8())
