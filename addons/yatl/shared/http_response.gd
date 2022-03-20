@@ -11,7 +11,7 @@ var error: int setget __noop_set # Error
 var result: int setget __noop_set # HTTPRequest Result
 var response_code: int setget __noop_set
 var headers: Dictionary setget __noop_set
-var body: PoolByteArray setget __noop_set
+var body: String setget __noop_set
 
 
 # Lifecycle methods
@@ -50,7 +50,7 @@ func __request_completed(
 
 		headers[name] = value
 
-	body = _body
+	body = _body.get_string_from_utf8()
 
 	request.queue_free()
 

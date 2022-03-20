@@ -4,6 +4,7 @@ extends Resource
 # Private imports
 
 const __PAL: Resource = preload("../pal/pal.gd")
+const __WebSocketConnection: Resource = __PAL.WebSocketConnection
 
 
 # Public imports
@@ -43,3 +44,70 @@ const StreamOfflineEvent: Resource = preload("./types/events.gd").StreamOfflineE
 const UserAuthorizationGrantEvent: Resource = preload("./types/events.gd").UserAuthorizationGrantEvent
 const UserAuthorizationRevokeEvent: Resource = preload("./types/events.gd").UserAuthorizationRevokeEvent
 const UserUpdateEvent: Resource = preload("./types/events.gd").UserUpdateEvent
+
+
+# Private constants
+
+const __EVENT_WSS_URL: String = "ws://127.0.0.1:25708"
+
+
+# Private variables
+
+var __pal: __PAL
+
+var __connection: __WebSocketConnection
+var __websocket_id: String
+
+
+# Lifecycle methods
+
+func _init(_pal: __PAL) -> void:
+	__pal = _pal
+
+	__connection = yield(__pal.establish_connection(__EVENT_WSS_URL), "completed")
+	__connection.connect("data_received", self, "__data_received")
+
+
+# Private methods
+
+func __data_received(data_string: String) -> void:
+	var data: Dictionary =  parse_json(data_string)
+
+	print(data)
+
+	match data["metadata"]["message_type"]:
+		"websocket_welcome":
+			__websocket_id = data["payload"]["websocket"]["id"]
+
+			# TODO: Convert this to use API method
+			var response = __pal.request(
+				'http://127.0.0.1:25708/helix/eventsub/subscriptions',
+				{
+					"client-id": "",
+					"authorization": "",
+					"content-type": "application/json",
+				},
+				false,
+				HTTPClient.METHOD_POST,
+				to_json({
+					"type": "channel.follow",
+					"version": "1",
+					"condition": {
+						"broadcaster_user_id": "",
+					},
+					"transport": {
+						"method": "websocket",
+						"id": __websocket_id,
+					},
+				})
+			)
+		"notification":
+			__handle_notification(data["payload"]["subscription"], data["payload"]["event"])
+
+
+func __handle_notification(subscription: Dictionary, event: Dictionary) -> void:
+	match subscription["type"]:
+		"channel.follow":
+			var follow_event = ChannelFollowEvent.new(event)
+
+			var a = 1
