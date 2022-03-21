@@ -54,4 +54,6 @@ func initialize_chat() -> Chat:
 func initialize_event() -> Event:
 	event = Event.new(__pal)
 
+	add_child(event)
+
 	return event
