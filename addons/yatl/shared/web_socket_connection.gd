@@ -27,6 +27,12 @@ func _init(
 	client.connect("connection_established", self, "__connected")
 
 
+# Public methods
+
+func disconnect_socket() -> void:
+	pass
+
+
 # Private methods
 
 func __closed(_was_clean_close: bool) -> void:
