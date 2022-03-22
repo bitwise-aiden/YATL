@@ -36,7 +36,7 @@ func _ready() -> void:
 	)
 
 	event.connect_event(
-		"channel_follow",
+		"channel.follow",
 		self,
 		"__follow"
 	)
