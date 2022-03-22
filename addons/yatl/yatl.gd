@@ -51,8 +51,12 @@ func initialize_chat() -> Chat:
 	return chat
 
 
-func initialize_event() -> Event:
-	event = Event.new(__pal)
+func initialize_event(
+	_broadcaster_user_id: String,
+	_client_id: String,
+	_access_token: String
+) -> Event:
+	event = Event.new(__pal, _broadcaster_user_id, _client_id, _access_token)
 
 	add_child(event)
 

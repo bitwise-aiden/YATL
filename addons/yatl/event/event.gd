@@ -55,6 +55,10 @@ const __EVENT_WSS_URL: String = "ws://127.0.0.1:25708"
 
 var __pal: __PAL
 
+var __broardcaster_user_id: String
+var __client_id: String
+var __access_token: String
+
 var __connection: __WebSocketConnection
 
 var __websocket_id: String
@@ -70,8 +74,16 @@ var __connections: Dictionary = {
 
 # Lifecycle methods
 
-func _init(_pal: __PAL) -> void:
+func _init(
+	_pal: __PAL,
+	_broadcaster_user_id: String,
+	_client_id: String,
+	_access_token: String
+) -> void:
 	__pal = _pal
+	__broardcaster_user_id = _broadcaster_user_id
+	__client_id = _client_id
+	__access_token = _access_token
 
 
 func _process(delta: float) -> void:
@@ -83,17 +95,22 @@ func _process(delta: float) -> void:
 
 # Pubic methods
 
-func connect_event(event: String, target: Object, method: String, binds: Array = []) -> int:
+func connect_event(
+	_event: String,
+	_target: Object,
+	_method: String,
+	_binds: Array = []
+) -> int:
 	# TODO: Check if event is a valid event
 	# return 1
 
-	if !__connection && !__establish_connection(__EVENT_WSS_URL):
+	if !__connection && !yield(__establish_connection(__EVENT_WSS_URL), "completed"):
 		return 2 # Some kind of error
 
-	if __connections.has(event):
-		__connections[event].append([
-			funcref(target, method),
-			binds,
+	if __connections.has(_event):
+		__connections[_event].append([
+			funcref(_target, _method),
+			_binds,
 		])
 
 		return OK
@@ -102,17 +119,17 @@ func connect_event(event: String, target: Object, method: String, binds: Array =
 	var response = __pal.request(
 		'http://127.0.0.1:25708/helix/eventsub/subscriptions',
 		{
-			"client-id": "",
-			"authorization": "",
+			"client-id": __client_id,
+			"authorization": "Bearer %s" % __access_token,
 			"content-type": "application/json",
 		},
 		false,
 		HTTPClient.METHOD_POST,
 		to_json({
-			"type": event,
+			"type": _event,
 			"version": "1",
 			"condition": {
-				"broadcaster_user_id": "",
+				"broadcaster_user_id": __broardcaster_user_id,
 			},
 			"transport": {
 				"method": "websocket",
@@ -121,16 +138,20 @@ func connect_event(event: String, target: Object, method: String, binds: Array =
 		})
 	)
 
+	response = yield(response, "completed")
+
 	if response.error:
 		return 3
 
 	if response.response_code != 200:
+		print(response.response_code)
+		print(response.body)
 		return 4
 
-	__connections[event] = []
-	__connections[event].append([
-		funcref(target, method),
-		binds,
+	__connections[_event] = []
+	__connections[_event].append([
+		funcref(_target, _method),
+		_binds,
 	])
 
 	return OK
@@ -151,7 +172,7 @@ func __establish_connection(url: String) -> bool:
 
 	var type: String = data["metadata"]["message_type"]
 
-	if type != "welcome_message":
+	if type != "websocket_welcome":
 		__connection.disconnect_socket()
 		__connection = null
 
@@ -188,7 +209,11 @@ func __handle_notification(payload: Dictionary) -> void:
 	var raw_event_data: Dictionary = payload["event"]
 
 	if __connections.has(subscription_type):
-		var name: String = "%sEvent" % subscription_type.replace('.', ' ').capitalize()
+		var name: String = "%sEvent" % subscription_type \
+			.replace(".", " ") \
+			.capitalize() \
+			.replace(" ", "") \
+			.replace("ChannelChannel", "Channel")
 		var event_resource: Resource = get(name)
 
 		if !event_resource:
@@ -203,6 +228,6 @@ func __handle_notification(payload: Dictionary) -> void:
 			if !function.is_valid():
 				continue # TODO: filter out invalid functions, close if none present
 
-			function.call_func([event_data] + binds)
+			function.call_funcv([event_data] + binds)
 	else:
 		pass # TODO
