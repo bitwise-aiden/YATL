@@ -5,6 +5,7 @@ class_name YATL, "./yatl_icon.png"
 # Private imports
 
 const __PAL: Resource = preload("./pal/pal.gd")
+const __EventProxy: Resource = preload("res://addons/yatl/event/proxy/proxy.gd")
 
 
 # Public imports
@@ -23,13 +24,18 @@ var event: Event
 
 # Private variables
 
-var __pal: __PAL = __PAL.new()
+var __pal: __PAL
+var __proxy: __EventProxy
 
 
 # Lifecycle methods
 
 func _ready() -> void:
+	__pal = __PAL.new()
 	add_child(__pal)
+
+	__proxy = __EventProxy.new(__pal)
+	add_child(__proxy)
 
 
 func _process(delta: float) -> void:
