@@ -49,7 +49,7 @@ const UserUpdateEvent: Resource = preload("./types/events.gd").UserUpdateEvent
 # Private constants
 
 const __EVENT_WSS_URL: String = "ws://127.0.0.1:25708"
-
+const __EVENT_HTTP_URL: String = "http://127.0.0.1:25707"
 
 # Private variables
 
@@ -117,7 +117,7 @@ func connect_event(
 
 	# TODO: Convert this to use API method
 	var response = __pal.request(
-		'http://127.0.0.1:25708/helix/eventsub/subscriptions',
+		"%s/helix/eventsub/subscriptions" % __EVENT_HTTP_URL,
 		{
 			"client-id": __client_id,
 			"authorization": "Bearer %s" % __access_token,
@@ -144,8 +144,6 @@ func connect_event(
 		return 3
 
 	if response.response_code != 200:
-		print(response.response_code)
-		print(response.body)
 		return 4
 
 	__connections[_event] = []
