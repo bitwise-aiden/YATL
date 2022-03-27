@@ -184,11 +184,6 @@ class ChannelModeratorRemoveEvent extends Event:
 
 
 class ChannelPollBeginEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const BitsVoting: Resource = preload("./shared.gd").BitsVoting
@@ -216,29 +211,7 @@ class ChannelPollBeginEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"bits_voting":
-				return BitsVoting.new(_data)
-			"channel_points_voting":
-				return ChannelPointsVoting.new(_data)
-			"choices":
-				return Choice.new(_data)
-			_:
-				return null
-
-
 class ChannelPollProgressEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const BitsVoting: Resource = preload("./shared.gd").BitsVoting
@@ -266,29 +239,7 @@ class ChannelPollProgressEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"bits_voting":
-				return BitsVoting.new(_data)
-			"channel_points_voting":
-				return ChannelPointsVoting.new(_data)
-			"choices":
-				return Choice.new(_data)
-			_:
-				return null
-
-
 class ChannelPollEndEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const BitsVoting: Resource = preload("./shared.gd").BitsVoting
@@ -317,29 +268,7 @@ class ChannelPollEndEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"bits_voting":
-				return BitsVoting.new(_data)
-			"channel_points_voting":
-				return ChannelPointsVoting.new(_data)
-			"choices":
-				return Choice.new(_data)
-			_:
-				return null
-
-
 class ChannelPointsCustomRewardAddEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const GlobalCooldown: Resource = preload("./shared.gd").GlobalCooldown
@@ -378,31 +307,14 @@ class ChannelPointsCustomRewardAddEvent extends Event:
 		pass
 
 
-	# Protected methods
+	func _get(property: String): # variant
+		if property == "Image":
+			return ImageURL
 
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"max_per_stream":
-				return MaxPerStream.new(_data)
-			"max_per_user_per_stream":
-				return MaxPerUserPerStream.new(_data)
-			"image", "default_image":
-				return ImageURL.new(_data)
-			"global_cooldown":
-				return GlobalCooldown.new(_data)
-			_:
-				return null
+		return null
 
 
 class ChannelPointsCustomRewardUpdateEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const GlobalCooldown: Resource = preload("./shared.gd").GlobalCooldown
@@ -441,31 +353,14 @@ class ChannelPointsCustomRewardUpdateEvent extends Event:
 		pass
 
 
-	# Protected methods
+	func _get(property: String): # variant
+		if property == "Image":
+			return ImageURL
 
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"max_per_stream":
-				return MaxPerStream.new(_data)
-			"max_per_user_per_stream":
-				return MaxPerUserPerStream.new(_data)
-			"image", "default_image":
-				return ImageURL.new(_data)
-			"global_cooldown":
-				return GlobalCooldown.new(_data)
-			_:
-				return null
+		return null
 
 
 class ChannelPointsCustomRewardRemoveEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const GlobalCooldown: Resource = preload("./shared.gd").GlobalCooldown
@@ -504,31 +399,14 @@ class ChannelPointsCustomRewardRemoveEvent extends Event:
 		pass
 
 
-	# Protected methods
+	func _get(property: String): # variant
+		if property == "Image":
+			return ImageURL
 
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"max_per_stream":
-				return MaxPerStream.new(_data)
-			"max_per_user_per_stream":
-				return MaxPerUserPerStream.new(_data)
-			"image", "default_image":
-				return ImageURL.new(_data)
-			"global_cooldown":
-				return GlobalCooldown.new(_data)
-			_:
-				return null
+		return null
 
 
 class ChannelPointsCustomRewardRedemptionAddEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Reward: Resource = preload("./shared.gd").Reward
@@ -553,27 +431,9 @@ class ChannelPointsCustomRewardRedemptionAddEvent extends Event:
 
 	func _init(_data: Dictionary).(_data) -> void:
 		pass
-
-
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"reward":
-				return Reward.new(_data)
-			_:
-				return null
 
 
 class ChannelPointsCustomRewardRedemptionUpdateEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Reward: Resource = preload("./shared.gd").Reward
@@ -600,25 +460,7 @@ class ChannelPointsCustomRewardRedemptionUpdateEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"reward":
-				return Reward.new(_data)
-			_:
-				return null
-
-
 class ChannelPredictionBeginEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -640,27 +482,9 @@ class ChannelPredictionBeginEvent extends Event:
 
 	func _init(_data: Dictionary).(_data) -> void:
 		pass
-
-
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"outcomes":
-				return Outcome.new(_data)
-			_:
-				return null
 
 
 class ChannelPredictionProgressEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -684,25 +508,7 @@ class ChannelPredictionProgressEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"outcomes":
-				return Outcome.new(_data)
-			_:
-				return null
-
-
 class ChannelPredictionLockEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -726,25 +532,7 @@ class ChannelPredictionLockEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"outcomes":
-				return Outcome.new(_data)
-			_:
-				return null
-
-
 class ChannelPredictionEndEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -768,19 +556,6 @@ class ChannelPredictionEndEvent extends Event:
 
 	func _init(_data: Dictionary).(_data) -> void:
 		pass
-
-
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"outcomes":
-				return Outcome.new(_data)
-			_:
-				return null
 
 
 class ChannelSubscriptionEndEvent extends Event:
@@ -824,11 +599,6 @@ class ChannelSubscriptionGiftEvent extends Event:
 
 
 class ChannelSubscriptionMessageEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Message: Resource = preload("./shared.gd").Message
@@ -855,25 +625,7 @@ class ChannelSubscriptionMessageEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"message":
-				return Message.new(_data)
-			_:
-				return null
-
-
 class DropEntitlementGrantEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public classes
 
 	class Data extends __Base:
@@ -903,25 +655,7 @@ class DropEntitlementGrantEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"data":
-				return Data.new(_data)
-			_:
-				return null
-
-
 class ExtensionBitsTransactionCreateEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Product: Resource = preload("./shared.gd").Product
@@ -944,19 +678,6 @@ class ExtensionBitsTransactionCreateEvent extends Event:
 
 	func _init(_data: Dictionary).(_data) -> void:
 		pass
-
-
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"product":
-				return Product.new(_data)
-			_:
-				return null
 
 
 class GoalsEvent extends Event:
@@ -982,11 +703,6 @@ class GoalsEvent extends Event:
 
 
 class HypeTrainBeginEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Contribution: Resource = preload("./shared.gd").Contribution
@@ -1013,25 +729,7 @@ class HypeTrainBeginEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"last_contribution", "top_contributions":
-				return Contribution.new(_data)
-			_:
-				return null
-
-
 class HypeTrainProgressEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Contribution: Resource = preload("./shared.gd").Contribution
@@ -1059,25 +757,7 @@ class HypeTrainProgressEvent extends Event:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"last_contribution", "top_contributions":
-				return Contribution.new(_data)
-			_:
-				return null
-
-
 class HypeTrainEndEvent extends Event:
-	# Private imports
-
-	const __Base: Resource = preload("./shared.gd").__Base
-
-
 	# Public imports
 
 	const Contribution: Resource = preload("./shared.gd").Contribution
@@ -1101,19 +781,6 @@ class HypeTrainEndEvent extends Event:
 
 	func _init(_data: Dictionary).(_data) -> void:
 		pass
-
-
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"top_contributions":
-				return Contribution.new(_data)
-			_:
-				return null
 
 
 class StreamOnlineEvent extends Event:
