@@ -13,10 +13,37 @@ class __Base:
 			if !properties.has(property_name):
 				pass # TODO: Determine what happens here
 
-			if properties[property_name] == TYPE_OBJECT:
-				continue
+			var value = data[property_name]
 
-			set(property_name, data[property_name])
+			if properties[property_name] == TYPE_OBJECT:
+				value = _create_object(property_name, value)
+			elif properties[property_name] == TYPE_ARRAY:
+				value = __create_object_array(property_name, value)
+
+			set(property_name, value)
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		return null
+
+
+	# Private methods
+
+	func __create_object_array(
+		_type: String,
+		_data_array: Array
+	) -> Array:
+		var instantiated_data: Array = []
+
+		for data in _data_array:
+			instantiated_data.append(_create_object(_type, data))
+
+		return instantiated_data
 
 
 # Public classes
@@ -156,10 +183,20 @@ class Message extends __Base:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		emotes = []
+		pass
 
-		for emote in _data["emotes"]:
-			emotes.append(Emote.new(emote))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"emotes":
+				return Emote.new(_data)
+			_:
+				return null
 
 
 class Outcome extends __Base:
@@ -176,10 +213,20 @@ class Outcome extends __Base:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		top_predictors = []
+		pass
 
-		for predictor in _data["top_predictors"]:
-			top_predictors.append(Predictor.new(predictor))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"top_predictors":
+				return Predictor.new(_data)
+			_:
+				return null
 
 
 class Predictor extends __Base:

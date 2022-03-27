@@ -2,6 +2,7 @@
 
 const __Base: Resource = preload("./shared.gd").__Base
 
+
 # Public classes
 
 class Event extends __Base:
@@ -183,6 +184,11 @@ class ChannelModeratorRemoveEvent extends Event:
 
 
 class ChannelPollBeginEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const BitsVoting: Resource = preload("./shared.gd").BitsVoting
@@ -204,19 +210,35 @@ class ChannelPollBeginEvent extends Event:
 	var ends_at: String
 
 
-	# Lifecycle methods
+	# Lifecyle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		bits_voting = BitsVoting.new(_data["bits_voting"])
-		channel_points_voting = ChannelPointsVoting.new(_data["channe_points_voting"])
+		pass
 
-		choices = []
 
-		for choice in _data["choices"]:
-			choices.append(Choice.new(choice))
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"bits_voting":
+				return BitsVoting.new(_data)
+			"channel_points_voting":
+				return ChannelPointsVoting.new(_data)
+			"choices":
+				return Choice.new(_data)
+			_:
+				return null
 
 
 class ChannelPollProgressEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const BitsVoting: Resource = preload("./shared.gd").BitsVoting
@@ -241,16 +263,32 @@ class ChannelPollProgressEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		bits_voting = BitsVoting.new(_data["bits_voting"])
-		channel_points_voting = ChannelPointsVoting.new(_data["channe_points_voting"])
+		pass
 
-		choices = []
 
-		for choice in _data["choices"]:
-			choices.append(Choice.new(choice))
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"bits_voting":
+				return BitsVoting.new(_data)
+			"channel_points_voting":
+				return ChannelPointsVoting.new(_data)
+			"choices":
+				return Choice.new(_data)
+			_:
+				return null
 
 
 class ChannelPollEndEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const BitsVoting: Resource = preload("./shared.gd").BitsVoting
@@ -276,16 +314,32 @@ class ChannelPollEndEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		bits_voting = BitsVoting.new(_data["bits_voting"])
-		channel_points_voting = ChannelPointsVoting.new(_data["channe_points_voting"])
+		pass
 
-		choices = []
 
-		for choice in _data["choices"]:
-			choices.append(Choice.new(choice))
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"bits_voting":
+				return BitsVoting.new(_data)
+			"channel_points_voting":
+				return ChannelPointsVoting.new(_data)
+			"choices":
+				return Choice.new(_data)
+			_:
+				return null
 
 
 class ChannelPointsCustomRewardAddEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const GlobalCooldown: Resource = preload("./shared.gd").GlobalCooldown
@@ -321,14 +375,34 @@ class ChannelPointsCustomRewardAddEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		max_per_stream = MaxPerStream.new(_data["max_per_stream"])
-		max_per_user_per_stream = MaxPerUserPerStream.new(_data["max_per_user_per_stream"])
-		image = ImageURL.new(_data["image"])
-		default_image = ImageURL.new(_data["default_image"])
-		global_cooldown = GlobalCooldown.new(_data["global_cooldown"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"max_per_stream":
+				return MaxPerStream.new(_data)
+			"max_per_user_per_stream":
+				return MaxPerUserPerStream.new(_data)
+			"image", "default_image":
+				return ImageURL.new(_data)
+			"global_cooldown":
+				return GlobalCooldown.new(_data)
+			_:
+				return null
 
 
 class ChannelPointsCustomRewardUpdateEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const GlobalCooldown: Resource = preload("./shared.gd").GlobalCooldown
@@ -364,14 +438,34 @@ class ChannelPointsCustomRewardUpdateEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		max_per_stream = MaxPerStream.new(_data["max_per_stream"])
-		max_per_user_per_stream = MaxPerUserPerStream.new(_data["max_per_user_per_stream"])
-		image = ImageURL.new(_data["image"])
-		default_image = ImageURL.new(_data["default_image"])
-		global_cooldown = GlobalCooldown.new(_data["global_cooldown"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"max_per_stream":
+				return MaxPerStream.new(_data)
+			"max_per_user_per_stream":
+				return MaxPerUserPerStream.new(_data)
+			"image", "default_image":
+				return ImageURL.new(_data)
+			"global_cooldown":
+				return GlobalCooldown.new(_data)
+			_:
+				return null
 
 
 class ChannelPointsCustomRewardRemoveEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const GlobalCooldown: Resource = preload("./shared.gd").GlobalCooldown
@@ -407,14 +501,34 @@ class ChannelPointsCustomRewardRemoveEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		max_per_stream = MaxPerStream.new(_data["max_per_stream"])
-		max_per_user_per_stream = MaxPerUserPerStream.new(_data["max_per_user_per_stream"])
-		image = ImageURL.new(_data["image"])
-		default_image = ImageURL.new(_data["default_image"])
-		global_cooldown = GlobalCooldown.new(_data["global_cooldown"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"max_per_stream":
+				return MaxPerStream.new(_data)
+			"max_per_user_per_stream":
+				return MaxPerUserPerStream.new(_data)
+			"image", "default_image":
+				return ImageURL.new(_data)
+			"global_cooldown":
+				return GlobalCooldown.new(_data)
+			_:
+				return null
 
 
 class ChannelPointsCustomRewardRedemptionAddEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Reward: Resource = preload("./shared.gd").Reward
@@ -438,10 +552,28 @@ class ChannelPointsCustomRewardRedemptionAddEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		reward = Reward.new(_data["reward"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"reward":
+				return Reward.new(_data)
+			_:
+				return null
 
 
 class ChannelPointsCustomRewardRedemptionUpdateEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Reward: Resource = preload("./shared.gd").Reward
@@ -465,10 +597,28 @@ class ChannelPointsCustomRewardRedemptionUpdateEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		reward = Reward.new(_data["reward"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"reward":
+				return Reward.new(_data)
+			_:
+				return null
 
 
 class ChannelPredictionBeginEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -489,13 +639,28 @@ class ChannelPredictionBeginEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		outcomes = []
+		pass
 
-		for outcome in _data["outcomes"]:
-			outcomes.append(Outcome.new(outcome))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"outcomes":
+				return Outcome.new(_data)
+			_:
+				return null
 
 
 class ChannelPredictionProgressEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -516,13 +681,28 @@ class ChannelPredictionProgressEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		outcomes = []
+		pass
 
-		for outcome in _data["outcomes"]:
-			outcomes.append(Outcome.new(outcome))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"outcomes":
+				return Outcome.new(_data)
+			_:
+				return null
 
 
 class ChannelPredictionLockEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -543,13 +723,28 @@ class ChannelPredictionLockEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		outcomes = []
+		pass
 
-		for outcome in _data["outcomes"]:
-			outcomes.append(Outcome.new(outcome))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"outcomes":
+				return Outcome.new(_data)
+			_:
+				return null
 
 
 class ChannelPredictionEndEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Outcome: Resource = preload("./shared.gd").Outcome
@@ -572,10 +767,20 @@ class ChannelPredictionEndEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		outcomes = []
+		pass
 
-		for outcome in _data["outcomes"]:
-			outcomes.append(Outcome.new(outcome))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"outcomes":
+				return Outcome.new(_data)
+			_:
+				return null
 
 
 class ChannelSubscriptionEndEvent extends Event:
@@ -619,6 +824,11 @@ class ChannelSubscriptionGiftEvent extends Event:
 
 
 class ChannelSubscriptionMessageEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Message: Resource = preload("./shared.gd").Message
@@ -642,10 +852,28 @@ class ChannelSubscriptionMessageEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		message = Message.new(_data["message"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"message":
+				return Message.new(_data)
+			_:
+				return null
 
 
 class DropEntitlementGrantEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public classes
 
 	class Data extends __Base:
@@ -672,13 +900,28 @@ class DropEntitlementGrantEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		data = []
+		pass
 
-		for raw_data in _data['data']:
-			data.append(Data.new(raw_data))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"data":
+				return Data.new(_data)
+			_:
+				return null
 
 
 class ExtensionBitsTransactionCreateEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Product: Resource = preload("./shared.gd").Product
@@ -700,7 +943,20 @@ class ExtensionBitsTransactionCreateEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		product = Product.new(_data["product"])
+		pass
+
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"product":
+				return Product.new(_data)
+			_:
+				return null
 
 
 class GoalsEvent extends Event:
@@ -726,6 +982,11 @@ class GoalsEvent extends Event:
 
 
 class HypeTrainBeginEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Contribution: Resource = preload("./shared.gd").Contribution
@@ -749,15 +1010,28 @@ class HypeTrainBeginEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		last_contribution = Contribution.new(_data["last_contribution"])
+		pass
 
-		top_contributions = []
 
-		for contribution in _data["top_contributions"]:
-			top_contributions.append(Contribution.new(contribution))
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"last_contribution", "top_contributions":
+				return Contribution.new(_data)
+			_:
+				return null
 
 
 class HypeTrainProgressEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Contribution: Resource = preload("./shared.gd").Contribution
@@ -782,15 +1056,28 @@ class HypeTrainProgressEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		last_contribution = Contribution.new(_data["last_contribution"])
+		pass
 
-		top_contributions = []
 
-		for contribution in _data["top_contributions"]:
-			top_contributions.append(Contribution.new(contribution))
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"last_contribution", "top_contributions":
+				return Contribution.new(_data)
+			_:
+				return null
 
 
 class HypeTrainEndEvent extends Event:
+	# Private imports
+
+	const __Base: Resource = preload("./shared.gd").__Base
+
+
 	# Public imports
 
 	const Contribution: Resource = preload("./shared.gd").Contribution
@@ -813,10 +1100,20 @@ class HypeTrainEndEvent extends Event:
 	# Lifecycle methods
 
 	func _init(_data: Dictionary).(_data) -> void:
-		top_contributions = []
+		pass
 
-		for contribution in _data["top_contributions"]:
-			top_contributions.append(Contribution.new(contribution))
+
+	# Protected methods
+
+	func _create_object(
+		_type: String,
+		_data: Dictionary
+	) -> __Base:
+		match _type:
+			"top_contributions":
+				return Contribution.new(_data)
+			_:
+				return null
 
 
 class StreamOnlineEvent extends Event:
