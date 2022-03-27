@@ -11,7 +11,7 @@ class __Base:
 
 		for property_name in data:
 			if !properties.has(property_name):
-				pass # TODO: Determine what happens here
+				pass # TODO: Determine what happens when property doesn't exist in data
 
 			var value = data[property_name]
 
@@ -39,12 +39,12 @@ class __Base:
 				.capitalize() \
 				.replace(" ", "")
 
-			print(type_name)
-
 			if get(type_name):
 				return get(type_name).new(_data)
 
 			type_parts.remove(0)
+
+		# TODO: Determine what happens when no type is found
 
 		return null
 
