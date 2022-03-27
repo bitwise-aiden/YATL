@@ -29,6 +29,23 @@ class __Base:
 		_type: String,
 		_data: Dictionary
 	) -> __Base:
+		var type_parts: PoolStringArray = _type \
+			.rstrip("s") \
+			.split("_", false)
+
+		while !type_parts.empty():
+			var type_name: String = type_parts \
+				.join(" ") \
+				.capitalize() \
+				.replace(" ", "")
+
+			print(type_name)
+
+			if get(type_name):
+				return get(type_name).new(_data)
+
+			type_parts.remove(0)
+
 		return null
 
 
@@ -174,6 +191,11 @@ class MaxPerUserPerStream extends __Base:
 
 
 class Message extends __Base:
+	# Public imports
+
+	# TODO: Figure out how to import emotes
+
+
 	# Public variables
 
 	var text: String
@@ -186,20 +208,12 @@ class Message extends __Base:
 		pass
 
 
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"emotes":
-				return Emote.new(_data)
-			_:
-				return null
-
-
 class Outcome extends __Base:
+	# Public imports
+
+	# TODO: Figure out how to import predictors
+
+
 	# Public variables
 
 	var id: String
@@ -214,19 +228,6 @@ class Outcome extends __Base:
 
 	func _init(_data: Dictionary).(_data) -> void:
 		pass
-
-
-	# Protected methods
-
-	func _create_object(
-		_type: String,
-		_data: Dictionary
-	) -> __Base:
-		match _type:
-			"top_predictors":
-				return Predictor.new(_data)
-			_:
-				return null
 
 
 class Predictor extends __Base:
