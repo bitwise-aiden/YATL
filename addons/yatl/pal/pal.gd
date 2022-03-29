@@ -2,6 +2,7 @@ extends Node
 
 # Public imports
 
+const DataType: Resource = preload("./types/data_type.gd")
 const HTTPResponse: Resource = preload("../shared/http_response.gd")
 const WebSocketConnection: Resource = preload("../shared/web_socket_connection.gd")
 
