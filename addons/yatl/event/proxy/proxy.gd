@@ -102,15 +102,12 @@ func _ready() -> void:
 
 	__timer.start()
 
-	var response: __PAL.HTTPResponse = __pal.request(
-		"http://127.0.0.1:4040/api/tunnels",
-		{},
-		false
+	var response: __PAL.HTTPResponse = yield(
+		__pal.request("http://127.0.0.1:4040/api/tunnels"),
+		"completed"
 	)
 
-	response = yield(response, "completed")
-
-	if response.response_code != 200:
+	if response.status_code != 200:
 		push_error("ngrok not active. Please start then restart this application")
 		queue_free()
 		return
@@ -215,19 +212,21 @@ func __handle_subscription(
 		"secret": "lumikkode_is_the_best",
 	}
 
-	var response = __pal.request(
-		"https://api.twitch.tv/helix/eventsub/subscriptions",
-		{
-			"client-id": client_id,
-			"authorization": authorization,
-			"content-type": "application/json",
-		},
-		true,
-		HTTPClient.METHOD_POST,
-		to_json(body)
+	var response: __PAL.HTTPResponse = yield(
+		__pal.request(
+			"https://api.twitch.tv/helix/eventsub/subscriptions",
+			{
+				"headers": {
+					"client-id": client_id,
+					"authorization": authorization,
+					"content-type": "application/json",
+				},
+				"data": body,
+				"method": HTTPClient.METHOD_POST,
+			}
+		),
+		"completed"
 	)
-
-	response = yield(response, "completed")
 
 
 func __handle_websocket(
