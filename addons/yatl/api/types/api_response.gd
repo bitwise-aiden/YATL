@@ -1,1 +1,1 @@
-extends "../../shared/http_response.gd"
+extends "../../pal/types/http_response.gd"
