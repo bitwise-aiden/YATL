@@ -3,7 +3,8 @@ extends Node
 # Public imports
 
 const DataType: Resource = preload("./types/data_type.gd")
-const HTTPResponse: Resource = preload("../shared/http_response.gd")
+const HTTPRequestState: Resource = preload("./types/http_request_state.gd")
+const HTTPResponse: Resource = preload("./types/http_response.gd")
 const WebSocketConnection: Resource = preload("../shared/web_socket_connection.gd")
 
 
@@ -43,15 +44,9 @@ func establish_connection(
 
 func request(
 	_url: String,
-	_headers: Dictionary = {},
-	_use_ssl: bool = true,
-	_method: int = 0,
-	_data: String = ""
-) -> HTTPResponse:
+	_options: Dictionary = {}
+) -> HTTPRequestState:
 	return __request_factory.request(
 		_url,
-		_headers,
-		_use_ssl,
-		_method,
-		_data
+		_options
 	)
