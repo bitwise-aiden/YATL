@@ -9,6 +9,7 @@ const WebSocketConnection: Resource = preload("../shared/web_socket_connection.g
 
 # Private imports
 
+const __DataHelper: Resource = preload("./helpers/data_helper.gd")
 const __RequestFactory: Resource = preload("./factories/request_factory.gd")
 const __WebSocketFactory: Resource = preload('./factories/web_socket_factory.gd')
 
@@ -26,6 +27,13 @@ func _ready() -> void:
 
 
 # Public methods
+
+func as_data_type(
+	_data_type: Resource,
+	_data # Variant
+) -> DataType:
+	return __DataHelper.as_data_type(_data_type, _data)
+
 
 func establish_connection(
 	_url: String
