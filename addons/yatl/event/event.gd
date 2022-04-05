@@ -116,29 +116,32 @@ func connect_event(
 		return OK
 
 	# TODO: Convert this to use API method
-	var response = __pal.request(
-		"%s/helix/eventsub/subscriptions" % __EVENT_HTTP_URL,
-		{
-			"client-id": __client_id,
-			"authorization": "Bearer %s" % __access_token,
-			"content-type": "application/json",
-		},
-		false,
-		HTTPClient.METHOD_POST,
-		to_json({
-			"type": _event,
-			"version": "1",
-			"condition": {
-				"broadcaster_user_id": __broardcaster_user_id,
-			},
-			"transport": {
-				"method": "websocket",
-				"id": __websocket_id,
-			},
-		})
+	var response: __PAL.HTTPResponse = yield(
+		__pal.request(
+			"%s/helix/eventsub/subscriptions" % __EVENT_HTTP_URL,
+			{
+				"headers": {
+					"client-id": __client_id,
+					"authorization": "Bearer %s" % __access_token,
+					"content-type": "application/json",
+				},
+				"data": {
+					"type": _event,
+					"version": "1",
+					"condition": {
+						"broadcaster_user_id": __broardcaster_user_id,
+					},
+					"transport": {
+						"method": "websocket",
+						"id": __websocket_id,
+					},
+				},
+				"method": HTTPClient.METHOD_POST,
+				"use_ssl": false,
+			}
+		),
+		"completed"
 	)
-
-	response = yield(response, "completed")
 
 	if response.error:
 		return 3
