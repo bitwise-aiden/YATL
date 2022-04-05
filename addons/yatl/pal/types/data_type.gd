@@ -2,7 +2,7 @@
 
 static func from_data(
 	_data_type: Resource,
-	_data # Variant
+	_data: Dictionary
 ): # Variant
 	var instance = _data_type.new()
 
