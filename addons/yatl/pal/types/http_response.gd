@@ -21,23 +21,6 @@ func _init(
 		json = parse_json(body)
 
 
-# Public methods
-
-func as_data(data_type: Resource): # Variant
-	if json == TYPE_ARRAY:
-		var data: Array = []
-
-		for value in json:
-			data.append(data_type.from_data(data_type, value))
-
-		return data
-
-	if json == TYPE_DICTIONARY:
-		return data_type.from_data(data_type, json)
-
-	return null
-
-
 # Private methods
 
 func __noop_set(
