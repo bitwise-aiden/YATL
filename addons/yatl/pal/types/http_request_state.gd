@@ -54,14 +54,12 @@ func __completed(
 	_headers: PoolStringArray,
 	_body: PoolByteArray
 ) -> void:
-	if _result == HTTPRequest.RESULT_SUCCESS:
-		response = __HTTPResponse.new(
-			_status_code,
-			__parse_headers(_headers),
-			_body.get_string_from_utf8()
-		)
-	else:
-		pass # TODO: Determine what to do here if the result isn't OK
+	response = __HTTPResponse.new(
+		_result,
+		_status_code,
+		__parse_headers(_headers),
+		_body.get_string_from_utf8()
+	)
 
 	request = null
 
