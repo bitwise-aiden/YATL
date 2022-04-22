@@ -8,6 +8,11 @@ const __HTTPResponse = preload("./http_response.gd")
 signal completed(response)
 
 
+# Private signals
+
+signal __completed() # Friend: RequestFactory
+
+
 # Public variables
 
 var completed: bool setget __noop_set
@@ -28,9 +33,9 @@ func _init(
 		request = _request
 		request.connect("request_completed", self, "__completed")
 	else:
-		yield(_request.get_tree(), "idle_frame")
+		yield(self, "__completed")
 
-		emit_signal("completed", response)
+		emit_signal("completed", response) # TODO: Determine how to instantiate here
 
 
 # Public methods
