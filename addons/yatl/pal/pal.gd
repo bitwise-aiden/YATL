@@ -5,7 +5,8 @@ extends Node
 const DataType: Resource = preload("./types/data_type.gd")
 const HTTPRequestState: Resource = preload("./types/http_request_state.gd")
 const HTTPResponse: Resource = preload("./types/http_response.gd")
-const WebSocketConnection: Resource = preload("../shared/web_socket_connection.gd")
+const WebSocketConnection: Resource = preload("./types/web_socket_connection.gd")
+const WebSocketConnectionState: Resource = preload("./types/web_socket_connection_state.gd")
 
 
 # Private imports
@@ -38,7 +39,7 @@ func as_data_type(
 
 func establish_connection(
 	_url: String
-) -> WebSocketConnection:
+) -> WebSocketConnectionState:
 	return __web_socket_factory.establish_connection(_url)
 
 
