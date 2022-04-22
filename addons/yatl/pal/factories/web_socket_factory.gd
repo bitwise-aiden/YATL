@@ -33,8 +33,6 @@ func establish_connection(
 
 	var error: int = client.connect_to_url(_url)
 
-	if error == OK:
-
 	var state: WebSocketConnectionState = WebSocketConnectionState.new(
 		client,
 		error
