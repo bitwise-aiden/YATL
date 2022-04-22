@@ -28,6 +28,9 @@ func request(
 	var state: HTTPRequestState = HTTPRequestState.new(request, error)
 	state.connect("completed", self, "__completed", [request])
 
+	if error != OK:
+		__trigger_completed(state)
+
 	return state
 
 
@@ -38,6 +41,7 @@ func __completed(
 	_request: HTTPRequest
 ) -> void:
 	_request.queue_free()
+
 
 func __formatted_data(
 	_options: Dictionary
@@ -86,3 +90,11 @@ func __formatted_query(
 	return "?%s" % query_parts \
 		.join("&") \
 		.http_escape()
+
+
+func __trigger_completed(
+	state: HTTPRequestState
+) -> void:
+	yield(self.get_tree(), "idle_frame")
+
+	state.emit_signal("__completed")
